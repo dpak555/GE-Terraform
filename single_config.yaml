@@ -1,0 +1,67 @@
+### INSTALLATION PARAMETERS
+
+## Single Node - define the following:
+#1. Internal IP of the machine.
+#2. External IP of the machine.
+k8s_nodes:
+  - { node: node1, internal_ip: I.I.I.I, external_ip: E.E.E.E }
+
+## In case of offlline-instllation (Private public docker registrry is required)
+offline_installer: false
+#docker_registry: ""
+
+## In case of running installation from Bastion/Remote machine define to yes/true.
+remote_installation: false
+
+## Update current installation. - true/false
+update: false
+
+## Application DNS Name.
+#1. When empty, first node external_ip will be configured
+#2. When is_ssl is true, configure the CN name
+application_dns_name: ""
+
+## Linux user of the servers (UID 1000)
+linux_user: "ubuntu"
+
+## SSH Key Path or Password is required, when ssh_key is empty, password will be prompted
+ssh_key: "/home/ubuntu/.ssh/id_rsa"
+
+## Name of Namespace
+namespace_name: sisense
+
+## Gateway port of api-gateway service - endpoint of Sisense in Non-Secured mode.
+gateway_port: 30845
+
+### SSL SETUP
+## Activate Secured Sisense in HTTPS, define key and cert certificates.
+is_ssl: false
+ssl_key_path: ""
+ssl_cer_path: ""
+
+### PROXY SETTINGS
+# Set these proxy values in order to update package manager and docker daemon to use proxies
+http_proxy: "http://cis-americas-pitc-cinciz.proxy.corporate.ge.com:80"
+https_proxy: "http://cis-americas-pitc-cinciz.proxy.corporate.ge.com:80"
+no_proxy: "localhost,127.0.0.1,0.0.0.0,I.I.I.I,I.I.I.I/24,node1,node1:2379,localhost:2379,I.I.I.I:2379,0.0.0.0:2379"
+
+# Using this option try to prevent
+
+### MONITORING
+
+## Grafana and Prometheus
+internal_monitoring: true
+
+## Fluentd With Logz.io Dashboards
+external_monitoring: true
+
+### UNINSTALL SISENSE
+## Uninstall whole K8S Cluster With Sisense services - true/false
+uninstall_cluster: false
+
+## Uninstall Sisense, Removing only Sisense services and remaing K8S Cluster alive, true/false
+## When is_kubernetes_cloud is enabled Sisense will be removed from the Cloud Cluster
+uninstall_sisense: false
+
+## Removing all Sisense data - true/false
+remove_user_data: false
