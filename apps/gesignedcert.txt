@@ -1,0 +1,25 @@
+### Issue CSR
+HOST=sisenseprod.corporate.ge.com
+
+# for MinGW/MSYS double slashes
+openssl req -nodes -newkey rsa:2048 -keyout $HOST.key -out $HOST.csr \
+-subj "//C=US/ST=VA/L=Glen Allen/O=General Electric Company/OU=Cybersecurity Technology and Risk/CN=${HOST}" \
+&& chmod 400 $HOST.key
+
+# 'protect' the private key from accidental deletion
+chmod 400 $HOST.key
+
+# (optional) verify the content of the CSR
+#openssl req -in $HOST.csr -noout -text
+
+cat $HOST.csr
+
+echo ## upload CSR to https://certificates.ge.com
+## use the following e-mail addresses
+echo pw.webadmins@ge.com
+echo pwenterprisecloudops@ge.com
+
+
+echo ## after receiving the issued .crt (.ccc) file back, rename it appropriately and run
+
+echo aws iam upload-server-certificate --server-certificate-name $HOST --certificate-body file://$HOST.crt --private-key file://$HOST.key --certificate-chain file://csc-ca-chain.crt
